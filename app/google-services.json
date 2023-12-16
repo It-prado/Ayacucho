@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "540131117119",
+    "project_id": "test-a1d4a",
+    "storage_bucket": "test-a1d4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540131117119:android:fea7d6b22beea0fca3908a",
+        "android_client_info": {
+          "package_name": "com.example.charlaayacucho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe2TSwfLCGewot8sPtebFPzZ_CBmGjyE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
