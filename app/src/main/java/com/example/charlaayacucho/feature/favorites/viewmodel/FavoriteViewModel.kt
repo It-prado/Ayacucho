@@ -23,21 +23,13 @@ import kotlinx.coroutines.launch
 
 class FavoriteViewModel(
     private val useCase: GetMovieUseCase,
-    private val useCaseTwo: GetMoviesUseCase
 ) : ViewModel() {
 
     private val _movie: MutableLiveData<MoviesDomain?> = MutableLiveData()
     val movie: LiveData<MoviesDomain?> = _movie
 
-    private val _movies: MutableLiveData<List<MoviesDomain>?> = MutableLiveData()
-    val movies: LiveData<List<MoviesDomain>?> = _movies
-
     private val _isLoading: MutableLiveData<Boolean?> = MutableLiveData()
     val isLoading: LiveData<Boolean?> = _isLoading
-
-    init {
-        fetchMovies()
-    }
 
     fun getMovieDetail(id: String) = viewModelScope.launch(Dispatchers.IO) {
         _isLoading.postValue(true)
@@ -54,22 +46,6 @@ class FavoriteViewModel(
         }
     }
 
-    fun fetchMovies() = viewModelScope.launch(Dispatchers.IO) {
-        _isLoading.postValue(true)
-        delay(1000)
-        when (val result = useCaseTwo.invoke()) {
-            is GetMoviesUseCaseResult.Error -> {
-                _isLoading.postValue(false)
-                _movies.postValue(null)
-            }
-
-            is GetMoviesUseCaseResult.Success -> {
-                _isLoading.postValue(false)
-                _movies.postValue(result.result)
-            }
-        }
-    }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -79,9 +55,7 @@ class FavoriteViewModel(
                     Repository(firebaseRealTime = firebase, generalMapper = generalMapper)
                 val useCase =
                     GetMovieUseCase(repository = repository, generalMapper = generalMapper)
-                val useCaseTwo =
-                    GetMoviesUseCase(repository = repository, generalMapper = generalMapper)
-                FavoriteViewModel(useCase, useCaseTwo)
+                FavoriteViewModel(useCase, )
             }
         }
     }

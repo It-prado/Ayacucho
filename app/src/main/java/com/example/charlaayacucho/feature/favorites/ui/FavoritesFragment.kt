@@ -58,8 +58,8 @@ class FavoritesFragment : Fragment() {
             setContent {
                 Mdc3Theme {
                     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                    //viewModel.fetchMovies(id!!)
-                    DetailTwo(viewModel)
+                    viewModel.getMovieDetail(id!!)
+                    Detail(viewModel)
                 }
 
             }
@@ -69,49 +69,9 @@ class FavoritesFragment : Fragment() {
 
 @Preview
 @Composable
-fun DetailTwo(viewModel: FavoriteViewModel = viewModel()) {
-    val value by viewModel.movie.observeAsState()
-    val isLoading by viewModel.isLoading.observeAsState()
-    val movies by viewModel.movies.observeAsState()
-    if (isLoading == true) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
-    LazyVerticalGrid(contentPadding = PaddingValues(16.dp),
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        content = {
-            items(movies.orEmpty()) {
-                Item(image = it.image)
-            }
-        })
-}
-
-
-@Composable
-fun Item(image: String) {
-    Box(modifier = Modifier.fillMaxWidth()) {
-        AsyncImage(
-            model = image,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .height(200.dp),
-            contentScale = ContentScale.Crop,
-        )
-    }
-
-}
-
-//@Preview
-@Composable
 fun Detail(viewModel: FavoriteViewModel = viewModel()) {
     val value by viewModel.movie.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState()
-    val movies by viewModel.movies.observeAsState()
     Column(
         Modifier
             .width(200.dp)
@@ -123,11 +83,7 @@ fun Detail(viewModel: FavoriteViewModel = viewModel()) {
             contentAlignment = Alignment.Center
         ) {
             if (isLoading == true) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(25.dp)
-                        .width(25.dp)
-                )
+                CircularProgressIndicator()
             }
             AsyncImage(
                 model = value?.image,
